@@ -660,10 +660,6 @@ void saadc_callback(nrf_drv_saadc_evt_t const * p_event)
 								}
 							}
 						}
-//						value_size = (flexV / 100) + 45; //110//82	//25 //44
-//						value_size =((0.01151832461 * flexV) + 0.0890052356);	
-//						value_size1 =(unsigned int)value_size;
-//						printf("Channel [%d] value_bf: %dcm\r\n", m_adc_channel_enabled, value_size1);
 						printf("\r\n");
 		}				
 				else if(m_adc_channel_enabled == 1)
@@ -702,9 +698,6 @@ void saadc_callback(nrf_drv_saadc_evt_t const * p_event)
 								}
 							}
 						}
-//						value_waist = (flexV1 / 100)+ 52; //110
-//						value_waist_s =(unsigned int)value_waist;
-//						printf("Channel [%d] value_bf_w: %dcm\r\n", m_adc_channel_enabled, value_waist_s);
 						printf("\r\n");
 				}
 				else if(m_adc_channel_enabled == 2)
@@ -759,8 +752,7 @@ void saadc_callback(nrf_drv_saadc_evt_t const * p_event)
 						}
 						value_adc_before /= 5;
 						flexV = ( 4095 / value_adc_before) - 1;
-						flexV = (R_DIV  / flexV);
-//						value_size = (flexV / 92); //110						
+						flexV = (R_DIV  / flexV);					
 				}
 				else if(m_adc_channel_enabled == 4)
 				{
@@ -797,68 +789,10 @@ void saadc_callback(nrf_drv_saadc_evt_t const * p_event)
 						value_adc_before /= 5;
 						flexV = ( 4095 / value_adc_before) - 1;
 						flexV = (R_DIV  / flexV);
-//						value_size = (flexV / 92); //110						
 
-				}
-//				err_code = nrf_drv_saadc_buffer_convert(p_event->data.done.p_buffer, SAADC_SAMPLES_IN_BUFFER);
-//        APP_ERROR_CHECK(err_code);		
-
-			//	nrf_delay_ms(10);
-//        m_adc_evt_counter++;
-//				nrf_drv_saadc_uninit();
-//				NRF_SAADC->INTENCLR = (SAADC_INTENCLR_END_Clear << SAADC_INTENCLR_END_Pos);
-//        NVIC_ClearPendingIRQ(SAADC_IRQn);
     }
 }
-//void saadc_init(void)
-//{
-//    ret_code_t err_code;
-//	
-//		nrf_drv_saadc_config_t saadc_config = NRF_DRV_SAADC_DEFAULT_CONFIG;
-//		saadc_config.resolution = NRF_SAADC_RESOLUTION_12BIT;
-//	
-//    nrf_saadc_channel_config_t channel_0_config =
-//        NRF_DRV_SAADC_DEFAULT_CHANNEL_CONFIG_SE(NRF_SAADC_INPUT_AIN1);
-//		channel_0_config.gain = NRF_SAADC_GAIN1_4;
-//		channel_0_config.reference = NRF_SAADC_REFERENCE_VDD4;
-//	
-//		nrf_saadc_channel_config_t channel_1_config =
-//				NRF_DRV_SAADC_DEFAULT_CHANNEL_CONFIG_SE(NRF_SAADC_INPUT_AIN2);
-//		channel_1_config.gain = NRF_SAADC_GAIN1_6;
-//		channel_1_config.reference = NRF_SAADC_REFERENCE_VDD4;
-//	
-//		nrf_saadc_channel_config_t channel_2_config =
-//				NRF_DRV_SAADC_DEFAULT_CHANNEL_CONFIG_SE(NRF_SAADC_INPUT_AIN4);			
-//		channel_2_config.gain = NRF_SAADC_GAIN1_4;
-//		channel_2_config.reference = NRF_SAADC_REFERENCE_VDD4;
-//	
-//		nrf_saadc_channel_config_t channel_3_config =
-//				NRF_DRV_SAADC_DEFAULT_CHANNEL_CONFIG_SE(NRF_SAADC_INPUT_AIN5);			
-//		channel_3_config.gain = NRF_SAADC_GAIN1_4;
-//		channel_3_config.reference = NRF_SAADC_REFERENCE_VDD4;
-//	
-//		nrf_saadc_channel_config_t channel_4_config =
-//				NRF_DRV_SAADC_DEFAULT_CHANNEL_CONFIG_SE(NRF_SAADC_INPUT_AIN6);
-//		channel_4_config.gain = NRF_SAADC_GAIN1_4;
-//		channel_4_config.reference = NRF_SAADC_REFERENCE_VDD4;	
-
-//	nrf_saadc_channel_config_t channel_5_config =
-//				NRF_DRV_SAADC_DEFAULT_CHANNEL_CONFIG_SE(NRF_SAADC_INPUT_AIN7);
-//		channel_5_config.gain = NRF_SAADC_GAIN1_4;
-//		channel_5_config.reference = NRF_SAADC_REFERENCE_VDD4;	
-//	
-//    err_code = nrf_drv_saadc_init(&saadc_config, saadc_callback);
-//    APP_ERROR_CHECK(err_code);
-
-//    err_code = nrf_drv_saadc_channel_init(0, &channel_0_config);
-//    APP_ERROR_CHECK(err_code);	
-//		m_adc_channel_enabled = 6;
-//		
-//    err_code = nrf_drv_saadc_buffer_convert(m_buffer_pool[0],SAADC_SAMPLES_IN_BUFFER);
-//    APP_ERROR_CHECK(err_code);   
-////    err_code = nrf_drv_saadc_buffer_convert(m_buffer_pool[1],SAADC_SAMPLES_IN_BUFFER);
-////    APP_ERROR_CHECK(err_code);
-//}
+}
 
 void saadc_init(void)
 {
@@ -955,62 +889,13 @@ void saadc_init(void)
 //		err_code = nrf_drv_saadc_channel_init(5, &channel_5_config);
 //    APP_ERROR_CHECK(err_code);
 		m_adc_channel_enabled = 6;
-//		if(SAADC_BURST_MODE)
-//    {
-//        NRF_SAADC->CH[0].CONFIG |= 0x01000000;
-//		}
+
 		NRF_SAADC->SAMPLERATE = (SAADC_SAMPLERATE_MODE_Timers << SAADC_SAMPLERATE_MODE_Pos);//200kHz
 		NRF_SAADC->SAMPLERATE |= (0x50 << SAADC_SAMPLERATE_MODE_Pos);//SAADC_CH_CONFIG_REFSEL_Pos/SAADC_SAMPLERATE_CC_Pos/SAADC_SAMPLERATE_MODE_Msk
-		//SAADC_SAMPLERATE_MODE_Pos//
     err_code = nrf_drv_saadc_buffer_convert(m_buffer_pool[0],SAADC_SAMPLES_IN_BUFFER);
     APP_ERROR_CHECK(err_code);
-//		nrf_drv_saadc_sample();
-//		err_code = nrf_drv_saadc_buffer_convert(m_buffer_pool[1],SAADC_SAMPLES_IN_BUFFER);
-//    APP_ERROR_CHECK(err_code);
 
 }
-
-//static void rtc_handler(nrf_drv_rtc_int_type_t int_type)
-//{
-//		uint32_t err_code;
-//    if (int_type == NRF_DRV_RTC_INT_COMPARE0)
-//    {
-//				//saadc_init();
-//				nrf_drv_saadc_sample();
-//			
-//				LEDS_INVERT(BSP_LED_3_MASK);        //Toggle LED1 to indicate SAADC sampling start
-//			
-//				err_code = nrf_drv_rtc_cc_set(&rtc,0,32,true);
-//				APP_ERROR_CHECK(err_code);
-//				nrf_drv_rtc_counter_clear(&rtc);
-//    }
-//}
-
-//static void lfclk_config(void)
-//{
-//    ret_code_t err_code = nrf_drv_clock_init();
-//    APP_ERROR_CHECK(err_code);
-
-//    nrf_drv_clock_lfclk_request(NULL);
-//}
-
-//static void rtc_config(void)
-//{
-//    uint32_t err_code;
-
-//    //Initialize RTC instance
-//    err_code = nrf_drv_rtc_init(&rtc, NULL, rtc_handler);
-//    APP_ERROR_CHECK(err_code);
-
-//    //Set compare channel to trigger interrupt after COMPARE_COUNTERTIME seconds
-//    err_code = nrf_drv_rtc_cc_set(&rtc,0,32,true);
-//    APP_ERROR_CHECK(err_code);
-
-//    //Power on RTC instance
-//    nrf_drv_rtc_enable(&rtc);
-//}
-/**@brief Application main function.
- */
 int main(void)
 {
     uint32_t err_code;
@@ -1044,10 +929,3 @@ int main(void)
 //				nrf_delay_ms(1);
     }
 }
-
-/** @} */
-
-
-/** 
- * @}
- */
